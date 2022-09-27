@@ -1,0 +1,140 @@
+---
+title: "TwitterAPI_Cleaning"
+output: html_document
+date: "2022-09-27"
+---
+```{r initalsetup, include = FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+getwd()
+setwd("~/Desktop/HW2")
+getwd()
+df <- read_csv("Part 2/TweetsDF.csv")
+```
+
+```{r}
+sum(is.na(df$text))
+sum(is.na(df$favorited))
+sum(is.na(df$favoriteCount))
+sum(is.na(df$replyToSN))
+sum(is.na(df$created))
+sum(is.na(df$truncated))
+sum(is.na(df$replyToSID))
+sum(is.na(df$id))
+sum(is.na(df$replyToUID))
+sum(is.na(df$statusSource))
+sum(is.na(df$screenName))
+sum(is.na(df$retweetCount))
+sum(is.na(df$isRetweet))
+sum(is.na(df$retweeted))
+sum(is.na(df$longitude))
+sum(is.na(df$latitude))
+```
+
+```{r}
+df_clean = subset(df, select = -c(replyToSN, replyToSID, replyToUID, longitude, latitude))
+```
+
+```{r}
+write.csv(df_clean,"/Users/lutianshu/Desktop/HW2/Part 2/TweetsDF_clean.csv", row.names = FALSE)
+```
+
+```{r}
+df_games <- read_csv("/Users/lutianshu/Downloads/anly-501-project-tl848-main/data/00-raw-data/games.csv", show_col_types = FALSE)
+spec(df_games)
+```
+
+```{r}
+sum(is.na(df_games))
+```
+```{r}
+library(dplyr)
+library(ggplot2)
+library(party)
+library(arules)
+library(neuralnet)
+library(zoo)
+library(reshape2)
+library(anytime)
+```
+
+```{r}
+df_games$creationTime <- df_games$creationTime/1000
+df_games$creationTime <- anytime(df_games$creationTime)
+
+df_games$gameDuration <-  round(df_games$gameDuration/60)
+
+df_games$gameId <- NULL
+
+df_games <- df_games[which(df_games$gameDuration > 18),]
+df_games <- df_games[which(df_games$firstTower > 0),]
+
+head(df_games)
+```
+```{r}
+ggplot(df_games, aes(x=gameDuration)) + geom_histogram(binwidth = 1)
+```
+```{r}
+ggames <- df_games
+ggames[,4:10][ggames[,4:10] == 0] <- 3
+ggames[,4:10] <- sapply(ggames[,4:10], factor)
+
+wr <- ggplot(ggames, aes(winner, fill = winner) ) +
+  geom_bar() + geom_text(stat='count',aes(label=..count..),vjust=-0.5) +
+  scale_fill_manual(values=c("#00BFC4", "#F8766D")) +
+  scale_y_continuous(name= "Frequency") +
+  scale_x_discrete(name = "Winning Team", labels = c('Blue','Red')) 
+  wr + theme(legend.position="none")
+```
+```{r}
+fb <- ggplot(ggames, aes(firstBlood, fill = firstBlood)) +
+  geom_bar() + geom_text(stat='count',aes(label=..count..),vjust=-0.5) +
+  scale_fill_manual(values=c("#00BFC4", "#F8766D", "#D3D3D3")) +
+  scale_y_continuous(name= "Frequency") +
+  scale_x_discrete(name = "First Blood", labels = c('Blue','Red','Neither'))
+  fb + theme(legend.position="none")
+```
+```{r}
+ft <- ggplot(ggames, aes(firstTower, fill = firstTower  ) ) +
+  geom_bar() + geom_text(stat='count',aes(label=..count..),vjust=-0.5) +
+  scale_fill_manual(values=c("#00BFC4", "#F8766D", "#D3D3D3")) +
+  scale_y_continuous(name= "Frequency") +
+  scale_x_discrete(name = "First Tower", labels = c('Blue','Red','Neither'))
+  ft + theme(legend.position="none")
+```
+```{r}
+fi <- ggplot(ggames, aes(firstInhibitor, fill = firstInhibitor) ) +
+  geom_bar() + geom_text(stat='count',aes(label=..count..),vjust=-0.5) +
+  scale_fill_manual(values=c("#00BFC4", "#F8766D", "#D3D3D3")) +
+  scale_y_continuous(name= "Frequency") +
+  scale_x_discrete(name = "First Inhibitor", labels = c('Blue','Red','Neither'))
+  fi + theme(legend.position="none")
+```
+```{r}
+fd <- ggplot(ggames, aes(firstDragon, fill = firstDragon) ) +
+  geom_bar() + geom_text(stat='count',aes(label=..count..),vjust=-0.5) +
+  scale_fill_manual(values=c("#00BFC4", "#F8766D", "#D3D3D3")) +
+  scale_y_continuous(name= "Frequency") +
+  scale_x_discrete(name = "First Dragon", labels = c('Blue','Red','Neither'))
+  fd + theme(legend.position="none")
+```
+```{r}
+rh <- ggplot(ggames, aes(firstRiftHerald, fill = firstRiftHerald)) +
+  geom_bar() + geom_text(stat='count',aes(label=..count..),vjust=-0.5) +
+  scale_fill_manual(values=c("#00BFC4", "#F8766D", "#D3D3D3")) +
+  scale_y_continuous(name= "Frequency") +
+  scale_x_discrete(name = "First Rift Herald", labels = c('Blue','Red','Neither'))
+  rh + theme(legend.position="none")
+```
+```{r}
+rh <- ggplot(ggames, aes(firstBaron, fill = firstBaron)) +
+    geom_bar() + geom_text(stat='count',aes(label=..count..),vjust=-0.5) +
+    scale_fill_manual(values=c("#00BFC4", "#F8766D", "#D3D3D3")) +
+    scale_y_continuous(name= "Frequency") +
+    scale_x_discrete(name = "First Baron", labels = c('Blue','Red','Neither'))
+  rh + theme(legend.position="none")
+```
+```{r}
+write.csv(df_games,"/Users/lutianshu/Desktop/HW2/Part 2/df_games_clean.csv", row.names = FALSE)
+
+```
+
