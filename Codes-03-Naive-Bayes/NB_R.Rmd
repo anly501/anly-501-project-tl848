@@ -1,0 +1,92 @@
+---
+title: "Naive Bayes"
+output: html_document
+date: "2022-10-09"
+---
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(psych)
+library(rpart)
+library(caret)
+library(caretEnsemble)
+library(Amelia)
+library(mice)
+library(GGally)
+library(randomForest)
+library(e1071)
+library(MASS)
+library(naivebayes)
+library(dplyr)
+```
+
+```{r}
+games <- read.csv("df_games_clean.csv")
+games$winner[games$winner==1] <- "blue"
+games$winner[games$winner==2] <- "red"
+
+head(games)
+```
+
+
+```{r}
+#Building a model
+#split data into training and test data sets
+set.seed(1234)
+indxTrain <- createDataPartition(y = games$winner,p = 0.8,list = FALSE)
+training <- games[indxTrain,]
+testing <- games[-indxTrain,]
+```
+
+```{r}
+prop.table(table(training$winner))*100
+```
+
+```{r}
+prop.table(table(testing$winner))*100
+```
+
+```{r}
+model <- naive_bayes(winner ~ ., data = training, usekernel = T)
+model
+```
+
+```{r}
+p <- predict(model, training, type = 'prob')
+head(cbind(p, training))
+```
+
+```{r}
+#Confusion Matrix – train data
+p1 <- predict(model, training)
+(tab1 <- table(p1, training$winner))
+```
+
+```{r}
+1 - sum(diag(tab1)) / sum(tab1)
+```
+```{r}
+plot(model)
+```
+
+```{r}
+model1 <- naive_bayes(winner ~ ., data = testing, usekernel = T)
+model1
+```
+
+
+```{r}
+#Confusion Matrix – test data
+p2 <- predict(model1, testing)
+(tab2 <- table(p2, testing$winner))
+```
+
+```{r}
+1 - sum(diag(tab2)) / sum(tab2)
+```
+
+```{r}
+#Plot Variable performance
+plot(model1)
+```
+
