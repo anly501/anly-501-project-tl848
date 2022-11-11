@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Clustering</title>
+    </head>
+    
+    <body>
+        <h1>Introduction</h1>
+        <p>
+            As we know, the video game League of Legends is played by two teams of five players each and takes place in an online environment. The nexus that belongs to the opposing team must be neutralized in order to win the game. Gold is a currency that may be gained by a team via many means, including completing goals and getting kills. The game is very competitive and demands cooperation from all players.
+        </p>
+        <p>
+            As a result, we will examine data from the first 10 minutes of LOL ranked games in this investigation. The data will be clustered using all of the available clustering techniques in Sklearn. This project's goals are to get more comfortable with the Sklean clustering API and demonstrate to others how easy it is to use.
+        </p>
+        
+        <h1>Theory</h1>
+        <h2>K-means</h2>
+        <p>
+            An iterative clustering analysis technique is the K-means clustering algorithm. Calculate the distance between each item and each seed clustering center after selecting K objects at random to serve as the initial clustering centers. The nearest cluster center to an item receives that object's location.
+        </p>
+        <p>
+            A cluster is represented by cluster centers and the items associated to them. The cluster center is continually updated using the cluster's current objects each time a sample is assigned. This cycle will keep going until a certain termination requirement is satisfied. The total of squared errors may be locally reduced, no or a small number of items may be reallocated to new clusters, and no or a small number of cluster centers may change.
+        </p>
+        
+        <h2>DBSCAN</h2>
+        <p>
+            DBSCAN is a clustering approach based on representative density. It can split areas with adequate high densities into clusters, can locate clusters of different forms in noisy spatial datasets, and unlike partitioning and hierarchical clustering algorithms, defines a cluster as the greatest collection of densely linked points.
+        </p>
+        <p>
+            Scanning radius (eps) and the minimum number of enclosed points are two factors that DBSCAN needs (minPts). Select an unexplored place as your starting position, then locate any sites nearby that are inside eps (including eps). The departing point is recorded as visited if the number of neighboring points is more than minPts and the current point clusters with its neighbors. The cluster is then expanded recursively by treating those sites within the cluster that are not already marked as visited (visited). The point is briefly designated as a noise point if the number of surrounding points is greater than minPts. The same procedure is used to process the unvisited points if the cluster has been sufficiently extended, which means that all of the points inside the cluster have been marked as visited.
+        </p>
+        
+        <h2>Hierarchical</h2>
+        <p>
+            In an effort to create a clustering structure like a tree, hierarchical clustering divides the information into many layers. A "bottom-up" aggregation approach or a "top-down" splitting strategy may be used to separate the data collection.
+        </p>
+        <p>
+            At the base of the tree, there are five clusters. In the top layer, cluster 6 contains data points 1 and 2, while cluster 7 contains data points 4 and 5. The number of clusters reduces as we go up the tree from the base. The user has the option to see clusters at any level of the tree since the full cluster tree is stored.
+        </p>
+        
+        <h1>Methods</h1>
+        <p>
+            Here is my <a href="https://github.com/anly501/anly-501-project-tl848/blob/main/Codes-05-Clustering/Clustering.ipynb" class="dropbtn">Code</a>. Firstly, We read the csv file and examine its columns before starting our investigation. Then this dataset has 40 columns, as can be seen. Even though some of the columns have distinct names, they all contain the same data. For instance, the "blueKills" and "redDeaths" columns should be same. After all, if a member of the blue team earns a kill, a member of the red team must have also died.
+        </p>
+        <p>Now that we have the blue and red team columns, we can roughly estimate how they are distributed.</p>
+        <img src="images/Hist.png">
+        <p>In the histogram above, the columns labeled blueKills, blueDeaths, blueAssists, blueTotalGold, blueAvgLevel, blueTotalExperience, blueTotalMinionsKilled, blueTotalJungleMinionsKilled, blueGoldDiff, blueExperienceDiff, blueCSPerMin, and blueGoldPerMin are those that are most similar to normal.</p>
+        <img src="images/Hist1.png">
+        <p>
+            The red team columns redAssists, redTotalGold, redAvgLevel, redTotalExperience, redTotalMinionsKilled, redTotalJungleMinionsKilled, redCSPerMin, and redGoldPerMin all have similar normal distributions as seen in the histogram above.
+        </p>
+        <p>
+            Boxplots will then be used to visualize the features and any statistical outliers will be eliminated. Any data points that are within three standard deviations of the mean will be retained for this analysis.
+        </p>
+        <img src="images/boxplot.png">
+        <img src="images/boxplot1.png">
+        <img src="images/boxplot2.png">
+        <img src="images/boxplot3.png">
+        <p>
+            After that, the data will be rescaled using Sklearn's StandardScaler. In contrast to the other characteristics, which have 7799 non-null values, the blueWins column contains 6185 non-null values. The values were dropped in certain cases. The columns with null values will be deleted.
+        </p>
+        <p>
+            We can simply create a large number of unsupervised learning models using Sklearn's API. All of the unsupervised learning techniques that sklearn provides will be used for this investigation. K-Means, hierarchical clustering, and DBSCAN are examples of this. I want to know how long these clustering algorithms take to complete. The function that will time the algorithms for us is defined in my code section. We will compare the total gold earned by the Blue Team and the Red Team for each clustering algorithm.
+        </p>
+        <p>
+            The Sklearn website states that "By attempting to divide samples into n groups with identical variance and minimizing an indicator called the inertia or within-cluster sum-of-squares, the KMeans method clusters data. The number of clusters must be given for this method. It has been employed across a wide variety of application areas in several distinct sectors and scales well to huge numbers of samples."
+        </p>
+        <p>
+            Using 2, 3, 4, and 5 clusters, we will perform 4 alternative K-Means clustering methods.
+        </p>
+        <img src="images/kmeans.png">
+        <img src="images/kmeans1.png">
+        <img src="images/kmeans2.png">
+        <img src="images/kmeans3.png">
+        <p>
+            The sklearn documentation states: "Clusters are seen by the DBSCAN algorithm as high-density regions divided by low-density areas. In contrast to k-means, which implies that clusters are convex formed, DBSCAN finds clusters that may be of any shape due to its very general viewpoint. The idea of core samples, or samples that are in high-density locations, is the primary idea of the DBSCAN. Therefore, a cluster is a collection of core samples that are near to one another (as determined by some distance metric) and a collection of non-core samples that are close to a core sample (but are not themselves core samples). The method has two parameters that officially describe what we mean when we term "dense": min samples and eps. Greater min samples or lower eps imply a cluster requires a higher density to develop."
+        </p>
+        <img src="images/DBSCAN.png">
+        <img src="images/DBSCAN1.png">
+        <img src="images/DBSCAN2.png">
+        <img src="images/DBSCAN3.png">
+        <p>
+            The sklearn website states: "A wide family of clustering algorithms known as "hierarchical clustering" creates layered clusters by gradually merging or dividing clusters. A tree is used to depict the clusters' hierarchical structure (or dendrogram). The unique cluster at the tree's base has all of the samples, whereas the clusters at the tree's leaves each contain a single sample."
+        </p>
+        <img src="images/Hierarchical.png">
+        <img src="images/Hierarchical1.png">
+        <img src="images/Hierarchical2.png">
+        <img src="images/Hierarchical3.png">
+        <img src="images/Hierarchical4.png">
+        
+        <p>
+            Finally, I wanted to take the time to make a column for which team has the advantage before we put this notebook to bed. The team with the better overall combined numbers after the first 10 minutes of play will be considered to have the edge. For instance, if the blue team has more kills, fewer deaths, more money, more experience, etc., we will state that they are in the lead in the game.
+        </p>
+        <p>
+            The column for the team's vision score is defined first. Vision in the game is controlled by positioning vision wards that enable the team to glimpse a previously concealed location on the map. The opposing side has the ability to demolish wards and block certain map sections from being seen. The team gains an advantage by having greater map visibility, hence I believe it is vital to specify this column.
+        </p>
+        <p>
+            In order to create the advantage column, we must compare the following metrics: (blue kills and red kills), (blue assists and red assists), (blue elite monsters and red elite monsters), (blue dragons and red dragons), (blue heralds and red heralds), (blue towers destroyed and red towers destroyed), (blue avg level and red avg level), (blue total minions killed and red total minions killed), (blue jungle minions killed and red jungle minions killed), (gold difference), (experience difference), (blue cs per min and red cs per min), (blue gold per min and red gold per min), and (vision score).
+        </p>
+        
+        <h1>Results</h1>
+        <p>
+            The K-means Clustering approach was the most effective in clustering the games out of all the clustering algorithms we evaluated. This approach was substantially quicker than the previous clustering algorithms, reaching a solution for each of the three examples in about 1 second.
+        </p>
+        <p>
+            If we look at the material more closely, we can notice that SKlean indicates that the algorithm performs best when we believe there are few clusters.
+        </p>
+        <p>
+            We can see the percentage of games that the blue team lost when they held the advantage now that the advantage column has been specified. Percent of games where blue lost with the advantage: 18.72%. Percent of games where red lost with the advantage: 19.89%
+        </p>
+        
+        <h1>Conclusions</h1>
+        <p>
+            Because League of Legends may capture hundreds of variables from each game, for further experiments, features such as hero combinations, timeframes, champion proficiency for a particular player, etc. can be incorporated into the analysis. Because certain heroes are powerful early in the game while others develop greatly in the middle to late game, the hero mix of each team will be crucial to the result of the match. This is why there is a ban/pick process before every ranked and professional game. However, the articulation of hero combo abilities will not take into account the influence players have on the game via their skills and map knowledge.
+        </p>
+        <p>
+            Nevertheless, we can observe that in many complex games, team combinations, particularly late game combinations, may have more laning stage uncertainty. For instance, if one side is able to establish a significant edge in laning, occasionally the other team, even the late hero, loses the match. Understanding how performance during the cashout period (the first 10 minutes) impacts the outcome is my aim.
+        </p>
+        
+        <h1>References</h1>
+        <p>
+            K-Means Clustering, https://amagash.github.io/pages/exploration/unsupervised-learning/k-means-cluster.html#:~:text=Introduction,cluster%20sum%2Dof%2Dsquares. 
+        </p>
+        <p>
+            Hierarchical Clustering Explained - towards Data Science. https://towardsdatascience.com/hierarchical-clustering-explained-e59b13846da8. 
+        </p>
+        <p>
+            PauloFavero. "Pythonmachinelearning/DBSCAN Clustering.ipynb at Master · Paulofavero/Pythonmachinelearning." GitHub, 11 Jan. 2018, https://github.com/PauloFavero/PythonMachineLearning/blob/master/DBSCAN%20Clustering.ipynb. 
+        </p>
+    </body>
+</html>
