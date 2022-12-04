@@ -375,7 +375,54 @@ launch. Predicting where players will end is undoubtedly difficult in the game
 LOL, since n players use n distinct methods. In my portfolio project, I will 
 essentially create a winning formula, i.e., create a model to  predict a 
 player's final position without a player actually participating in the game.</p>
+<p>
+    Riot Games is ultimately the owner of the data, and their data rules are in effect.
+These files have nothing to do with Riot Games and are solely provided as a more convenient method to get a big dataset without using the Riot API.
+</p>
+<p>
+    The accuracy of the data is not guaranteed and is supplied "as is." Do not hold Riot or me responsible if your algorithm catches fire.
+If you, Rito, are against posting this information online, get in touch with me, and it will be taken down right away.
+</p>
+<p>
+    As we know, In the MOBA (multiplayer online battle arena) game League of Legends, two teams—blue and red—compete against one another. There are 5 roles, 3 lanes, and a jungle. To win the game, you must destroy the opposing Nexus.
+</p>
+<p>
+    The first 10 minutes of around 10k rated games (SOLO QUEUE) from a high ELO are included in this dataset as metrics (DIAMOND I to MASTER). Players are on a similar level.
 
+Every game is different. You may get extra attributes from the Riot API by using the gameId.
+
+After 10 minutes of play, each team must acquire 19 features for a total of 38. This comprises victories, losses, gold, experience, and level... You must do some feature engineering to get further information.
+
+The desired value is in the column blueWins (the value we are trying to predict). A rating of 1 indicates a victory for the blue team. Otherwise, 0
+</p>
+<p>
+    Here are some terms in this game that will be used in my project:
+</p>
+<p>
+    Warding totem: A piece of equipment that a player may place on a map to make the region around them visible. Excellent for controlling maps and goals.
+</p>
+<p>
+    Minions: Both sides' non-player characters. When slain by players, they drop gold.
+</p>
+<p>NPCs known as jungle minions that are NOT on ANY TEAM. When slain by players, they provide gold and benefits.</p>
+<p>
+    Elite monsters: Monsters with high health/damage who, when defeated by a team, provide a significant bonus (gold/XP/stats).
+</p>
+<p>
+    Dragons are a rare creature that, when defeated, rewards the squad. An enormous stats boost is awarded when a squad kills their fourth dragon. The crew has a significant edge thanks to the fifth dragon, Elder Dragon.
+</p>
+<p>
+    Herald: A powerful enemy that increases a player's stats when slain. It demolishes buildings while assisting in lane pushing.
+</p>
+<p>
+    Towers: Buildings that must be destroyed in order to get to the opposing Nexus. The gift is gold.
+</p>
+<p>
+    Rank: Champion Rank. Commence at 1. Max is 18.
+</p>
+<p>
+    A single LoL game contains a tremendous amount of data. In order to predict the outcome of a League of Legends game, analyze which in-game events are most likely to result in victory, gauge the impact of champion bans, and other tasks, this dataset takes the most pertinent information and makes it readily accessible.
+</p>
 <h2>Questions</h2>
 
 <ol>
