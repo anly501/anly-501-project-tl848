@@ -1,0 +1,37 @@
+<html>
+    <heand>
+        <title>Conclusions</title>
+    </heand>
+    <body>
+        <h1>Conclusions</h1>
+        <p>
+            Online-based games like League of Legends have the unique capability of being updated and altered on a regular basis. Riot Games must thus choose when and how to implement improvements if they wish to balance their game. Despite the fact that several websites already exist that use the Riot API to mine data and provide intriguing, customized statistics, none has successfully examined the connection between balancing tweaks and their impact on the game. This project tackles this issue by tracking many in-game variables gathered from hundreds of thousands of games and using categorical and numerical method to classify and quantify patch note changes. We are able to identify correlations between balancing changes and their impact on the game to the best of our abilities using the right technologies. I researched and integrated a variety of data science methods for this project, including Naive Bayes, SVM, Decision Trees, and Clustering, in order to build a website and do analysis that may aid to decide when to modify the balance.
+        </p>
+        <img src="./images/Big League Map.jpg" width="750" height="500">
+        <p>
+            From the naive bays in Python with labeled text data, we know that the multinomial naive bayes model does better than linear support vector machines. We can still make the models more accurate by preprocessing the data and using lexicon models like Textblob. From the previous R example, we can see that there are fewer mistakes in testing data than in training data. So, we can improve the accuracy of the model during the train test while adding more observations. And the graphs show that the spread is random. When they reach a certain value, the win rate will also reach its local peak.
+        </p>
+        <p>
+            According to the decesion trees, there are a lot of things that can become variables that affect who wins the game. But players can also offer to give up early at the beginning of the LOL game if they are AFK. In this case, our model predicts that one side will win 51% to 49% of the time if the first blood is not spilled.
+
+Anyway, the decision trees for this part are very quick and work well. Compared to KNN and other algorithms for classifying data. Simple to comprehend, interpret, and visualize. Decision trees can work with any kind of data, whether it's a number, a list, or a boolean. Normalizing the Decision Tree is not necessary. But in the future, this could cause the model to be too well-fitted to the training set on high-dimensional datasets. This would make predictions on the training set seem more accurate than they really are and stop the model from making accurate predictions on the test set.
+
+For the general public, a decision tree can help them weigh their options when playing games and figure out which team will win by watching other players. It's a great way to help them decide between different ways to act because it gives you a framework for presenting different options and researching what might happen if they were chosen.
+        </p>
+<p>
+    In SVM, one of the steps that takes the most time but is important for getting the best results is analyzing, pre-processing, and transforming the data. A skilled data scientist needs to be able to understand the data and get it ready before starting to make the prediction model. It's also important to know how to choose the right parameters for the classifier, since making the wrong choice could seriously hurt the results.
+
+All of the models have reached very high rates of accuracy. This is because it uses data from games that have already been played and input qualities that are strongly linked to the variable to be predicted. There are more things to think about in a game than what is in this "dataSet" (number of "minions", amount of gold, items purchased, ...).
+
+The best thing would be if all of these extra features were added along with the ones that are already there, but at a certain point in the game, instead of being data that can only be seen after the game is over. Since it would be very interesting to have a "dataSet" with information about a team at 10, 15, and 20 minutes and know if it won in the end, for example, the average length of a game is 30 minutes, as shown in the section on descriptive analysis.
+</p>
+<p>
+    For the clustering, League of Legends can track hundreds of different things about each game. This means that features like hero combinations, time frames, champion proficiency for a certain player, etc. can be added to the analysis for further tests. Because some heroes are strong early in the game and others get much better in the middle and late game, the mix of heroes on each team will be key to who wins. This is why every ranked and professional game starts with a ban/pick process. But the abilities of hero combos won't take into account how players can change the game through their skills and knowledge of the map.
+
+Still, we can see that in many complex games, especially late-game team combinations, there may be more uncertainty in the laning stage. For example, if one team gets a big lead in laning, the other team, even if they have the late hero, might lose the match. My goal is to figure out how performance during the first 10 minutes (the cashout period) affects the outcome.
+</p>
+<p>
+    Finally, I intend to include more features for a better model of player performance, including positional and communication data (such as pings), vision data, kills/death/assists in the first 10 minutes compared to the overall results, and kills/death/assists in the first 10 minutes per player regarding the future work. Additionally, I will investigate how to analyze player history data, which should greatly improve the accuracy of the match result prediction.
+</p>
+    </body>
+</html>
